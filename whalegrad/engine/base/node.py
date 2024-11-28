@@ -12,18 +12,18 @@ class Node:
   
   def topological_sort(self):
     
-    sorted_Whalors = []
+    sorted_Tenosrs = []
     if self.are_children_visited():
       self.visited = True
-      sorted_Whalors.append(self.whals)
+      sorted_Tenosrs.append(self.whals)
       for parent in self.parents:
         if not(parent.visited):
-          sorted_Whalors+=parent.topological_sort()
+          sorted_Tenosrs+=parent.topological_sort()
     else:
       for child in self.children:
         if not(child.visited):
-          sorted_Whalors+=child.topological_sort()
-    return sorted_Whalors
+          sorted_Tenosrs+=child.topological_sort()
+    return sorted_Tenosrs
   
   def backward(self, retain_graph):
     
@@ -31,14 +31,14 @@ class Node:
     graph = current_graph()
     graph.reset_visited()
     self.visit_all_children()
-    sorted_Whalors = self.topological_sort()
+    sorted_Tenosrs = self.topological_sort()
     graph.reset_visited()
 
-    sorted_Whalors.pop(0)
+    sorted_Tenosrs.pop(0)
     self.visited = True
     self.whals._backward(self, retain_graph, calculate_grads=False)
 
-    for whals in sorted_Whalors:
+    for whals in sorted_Tenosrs:
       node = graph.get_node(whals)
       node.visited = True
       whals._backward(node, retain_graph)

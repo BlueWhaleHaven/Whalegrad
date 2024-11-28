@@ -1,5 +1,5 @@
 from copy import deepcopy
-from whalegrad.engine.whalor import Whalor
+from whalegrad.engine.Tenosr import Tenosr
 
 
 
@@ -54,7 +54,7 @@ class Core:
     object.__setattr__(self, attr, val)
 
 
-class Param(Whalor):
+class Param(Tenosr):
   
 
   def __init__(self, data, requires_grad=False, requires_broadcasting=True):

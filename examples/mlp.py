@@ -5,7 +5,7 @@ from whalegrad.nn.layers.linear import Linear
 from whalegrad.nn.loss import  SoftmaxCE, BinaryCrossEntropy
 from whalegrad.nn.layers.model import Model
 from whalegrad.nn.optim import Adam, Momentum, RMSProp, SGD
-from whalegrad.engine.whalor import Whalor
+from whalegrad.engine.Tenosr import Tenosr
 from whalegrad.nn.layers.containers import Sequential
 from whalegrad.engine.toolbox import grad_check
 from whalegrad.nn.layers.essential import get_batches
@@ -24,10 +24,10 @@ from whalegrad  import nn
 X, y = make_moons(n_samples=1000, noise=0.1)
 X_train,X_test ,y_train ,y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# convert into whalor (tensor)
+# convert into Tenosr (tensor)
 
-X_train, X_test = Whalor(X_train), Whalor(X_test)
-y_train, y_test = Whalor(y_train.reshape(800,1)), Whalor(y_test.reshape(200,1))
+X_train, X_test = Tenosr(X_train), Tenosr(X_test)
+y_train, y_test = Tenosr(y_train.reshape(800,1)), Tenosr(y_test.reshape(200,1))
 
 print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
 

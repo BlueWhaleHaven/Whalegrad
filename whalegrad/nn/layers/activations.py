@@ -8,8 +8,8 @@ class ReLU(Core, Action):
   
   def forward(self, inputs):
     
-    inputs = self.get_whalors(inputs)
-    return self.get_result_whalor(np.maximum(0, inputs.data), inputs)
+    inputs = self.get_Tenosrs(inputs)
+    return self.get_result_Tenosr(np.maximum(0, inputs.data), inputs)
   
   def backward(self, inputs):
     
@@ -27,8 +27,8 @@ class sigmoid(Core, Action):
   
   def forward(self, inputs):
     
-    inputs = self.get_whalors(inputs)
-    return self.get_result_whalor(1/(1+np.exp(-inputs.data)), inputs)
+    inputs = self.get_Tenosrs(inputs)
+    return self.get_result_Tenosr(1/(1+np.exp(-inputs.data)), inputs)
   
   def backward(self, inputs):
     
@@ -47,8 +47,8 @@ class tanh(Core, Action):
   
   def forward(self, inputs):
     
-    inputs = self.get_whalors(inputs)
-    return self.get_result_whalor(np.tanh(inputs.data), inputs)
+    inputs = self.get_Tenosrs(inputs)
+    return self.get_result_Tenosr(np.tanh(inputs.data), inputs)
   
   def backward(self, inputs):
     
@@ -71,9 +71,9 @@ class softmax(Core, Action):
 
   def forward(self, inputs):
     
-    inputs = self.get_whalors(inputs)
+    inputs = self.get_Tenosrs(inputs)
     result = self.calc_softmax(inputs.data, axis=self.axis)
-    return self.get_result_whalor(result, inputs)
+    return self.get_result_Tenosr(result, inputs)
   
   def backward(self, inputs):
     
@@ -119,9 +119,9 @@ class LeakyReLU(Core, Action):
 
   def forward(self, inputs):
     
-    inputs = self.get_whalors(inputs)
+    inputs = self.get_Tenosrs(inputs)
     arr = inputs.data
-    return self.get_result_whalor(np.where(arr>=0, arr, self.leak*arr), inputs)
+    return self.get_result_Tenosr(np.where(arr>=0, arr, self.leak*arr), inputs)
   
   def backward(self, inputs):
     
@@ -141,9 +141,9 @@ class Swish(Core, Action):
         self.beta = beta
 
     def forward(self, inputs):
-        inputs = self.get_whalors(inputs)
+        inputs = self.get_Tenosrs(inputs)
         result = inputs.data / (1 + np.exp(-self.beta * inputs.data))
-        return self.get_result_whalor(result, inputs)
+        return self.get_result_Tenosr(result, inputs)
 
     def backward(self, inputs):
         exp_beta_x = np.exp(-self.beta * inputs.data)
@@ -165,10 +165,10 @@ class SwiGLU(Core, Action):
         self.beta = beta
 
     def forward(self, inputs):
-        inputs = self.get_whalors(inputs)
+        inputs = self.get_Tenosrs(inputs)
         gate = 1 / (1 + np.exp(-self.beta * inputs.data))
         result = inputs.data * gate
-        return self.get_result_whalor(result, inputs)
+        return self.get_result_Tenosr(result, inputs)
 
     def backward(self, inputs):
         exp_beta_x = np.exp(-self.beta * inputs.data)

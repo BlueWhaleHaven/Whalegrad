@@ -1,6 +1,6 @@
 # lest build the dropout Module
 from copy import deepcopy
-from whalegrad.engine.whalor import Whalor
+from whalegrad.engine.Tenosr import Tenosr
 import numpy as np
 from whalegrad.engine.functions import dot
 from whalegrad.engine.functions import Action
@@ -20,12 +20,12 @@ class Dropout(Core, Action):
     if self.eval:
       filter = np.ones(inputs.shape) 
       filter = np.where(np.random.random(inputs.shape)<self.prob, 1, 0)
-    inputs, filter = self.get_whalors(inputs, filter)
+    inputs, filter = self.get_Tenosrs(inputs, filter)
     if not(self.eval): 
       result = (inputs.data*filter.data)/self.prob
     else:
       result = inputs.data
-    return self.get_result_whalor(inputs.data, inputs, filter)
+    return self.get_result_Tenosr(inputs.data, inputs, filter)
   
   def backward(self, inputs, filter):
     

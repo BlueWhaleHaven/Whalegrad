@@ -1,7 +1,7 @@
-from whalegrad.engine.whalor import Whalor
+from whalegrad.engine.Tenosr import Tenosr
 
-a = Whalor([5], requires_grad =True,)
-b = Whalor([4], requires_grad = True)
+a = Tenosr([5], requires_grad =True,)
+b = Tenosr([4], requires_grad = True)
 c = a * b
 g = c * b 
 f = g - a
