@@ -3,7 +3,7 @@ from .functions import add, sub, mul, div, pow as _pow, transpose, sum as _sum, 
 
 
 
-class Tenosr:
+class Tensor:
   def __init__(self, data, requires_grad=False, requires_broadcasting=True):
     
     self.data = data
@@ -19,17 +19,17 @@ class Tenosr:
   def backward(self, upper_grad=1., preserve_graph=False):
     
     if not(self.requires_grad):
-      raise ValueError("Only Tenosrs who requires_grad can call backward")
+      raise ValueError("Only Tensors who requires_grad can call backward")
     from .toolbox import current_graph
     graph = current_graph()
     upper_grad = check_data(upper_grad)
     if self.shape!=upper_grad.shape:
-      raise ValueError("Shapes of grad and Tenosr data must match!")
-    self.accumulate_grad(upper_grad) # Setting the grad of the current Tenosr by adding the upper_grad
+      raise ValueError("Shapes of grad and Tensor data must match!")
+    self.accumulate_grad(upper_grad) # Setting the grad of the current Tensor by adding the upper_grad
     node = graph.get_node(self)
     node.backward(preserve_graph)
     if not(preserve_graph):
-      graph.reset_graph() # Tenosrs are auto-removed, this is just for redundancy / safety
+      graph.reset_graph() # Tensors are auto-removed, this is just for redundancy / safety
   
   def _backward(self, node, preserve_graph, calculate_grads=True):
     
@@ -44,9 +44,9 @@ class Tenosr:
         grad = grad.reshape(self.shape)
         self.accumulate_grad(grad)
       if not(preserve_graph) and child.are_parents_visited():
-        graph.remove_Tenosr(child.whals)
+        graph.remove_Tensor(child.whals)
     if not(preserve_graph) and node.are_parents_visited():
-      graph.remove_Tenosr(node.whals)
+      graph.remove_Tensor(node.whals)
   
   def set_grad_fn(self, grad_fn):
     
@@ -150,7 +150,7 @@ class Tenosr:
     for index in indices:
       if type(index) not in supported_types:
         raise TypeError(f"Expected index of {supported_types} instead got {type(index)}")
-    return Tenosr(self.data[indices], requires_grad=self.requires_grad)
+    return Tensor(self.data[indices], requires_grad=self.requires_grad)
   
   def __repr__(self):
     return f'Loss: {self.data.item()}'

@@ -7,53 +7,53 @@ class Action:
   
   def process_inputs(self, inputs):
     
-    from .Tenosr import Tenosr
+    from .Tensor import Tensor
     inputs = list(inputs)
     for i,operand in enumerate(inputs):
-      if not isinstance(operand, Tenosr):
-        inputs[i] = Tenosr(operand)
+      if not isinstance(operand, Tensor):
+        inputs[i] = Tensor(operand)
     return tuple(inputs)
   
-  def get_Tenosrs(self, *inputs):
+  def get_Tensors(self, *inputs):
     
-    Tenosrs = self.process_inputs(inputs)
-    if len(Tenosrs)==0:
+    Tensors = self.process_inputs(inputs)
+    if len(Tensors)==0:
       return None
-    elif len(Tenosrs)==1:
-      return Tenosrs[0]
+    elif len(Tensors)==1:
+      return Tensors[0]
     else:
-      return Tenosrs
+      return Tensors
   
-  def get_broadcast_shape(self, *Tenosrs):
+  def get_broadcast_shape(self, *Tensors):
     
-    for whals in Tenosrs:
+    for whals in Tensors:
       if not(whals.requires_broadcasting):
         return None
     try:
-      return np.broadcast_shapes(*(whals.data.shape for whals in Tenosrs))
+      return np.broadcast_shapes(*(whals.data.shape for whals in Tensors))
     except ValueError:
       return None
   
-  def result_requires_grad(self, Tenosrs):
+  def result_requires_grad(self, Tensors):
     
-    for whals in Tenosrs:
+    for whals in Tensors:
       if whals.requires_grad:
         return True
     return False
   
-  def get_result_Tenosr(self, result, *Tenosrs):
+  def get_result_Tensor(self, result, *Tensors):
     
-    from .Tenosr import Tenosr
+    from .Tensor import Tensor
     from .toolbox import current_graph
     graph = current_graph()
     result = result.astype(np.ndarray)
-    result_Tenosr = Tenosr(result, self.result_requires_grad(Tenosrs))
+    result_Tensor = Tensor(result, self.result_requires_grad(Tensors))
     if graph.track:
-      result_node = Node(result_Tenosr)
+      result_node = Node(result_Tensor)
       result_node.backward_fn = self.backward
-      result_node.parent_broadcast_shape = self.get_broadcast_shape(*Tenosrs)
-      graph.create_edge(result_node, Tenosrs)
-    return result_Tenosr
+      result_node.parent_broadcast_shape = self.get_broadcast_shape(*Tensors)
+      graph.create_edge(result_node, Tensors)
+    return result_Tensor
   
   def backward(self, *args):
     
@@ -66,8 +66,8 @@ class Add(Action):
   
   def forward(self, whals1, whals2):
       
-      whals1, whals2 = self.get_Tenosrs(whals1, whals2)
-      return self.get_result_Tenosr(whals1.data+whals2.data, whals1, whals2)
+      whals1, whals2 = self.get_Tensors(whals1, whals2)
+      return self.get_result_Tensor(whals1.data+whals2.data, whals1, whals2)
   
   def backward(self, whals1, whals2):
      
@@ -84,8 +84,8 @@ class Sub(Action):
   
   def forward(self, whals1, whals2):
     
-    whals1, whals2 = self.get_Tenosrs(whals1, whals2)
-    return self.get_result_Tenosr(whals1.data-whals2.data, whals1, whals2)
+    whals1, whals2 = self.get_Tensors(whals1, whals2)
+    return self.get_result_Tensor(whals1.data-whals2.data, whals1, whals2)
   
   def backward(self, whals1, whals2):
    
@@ -102,8 +102,8 @@ class Mul(Action):
   
   def forward(self, whals1, whals2):
     
-    whals1, whals2 = self.get_Tenosrs(whals1, whals2)
-    return self.get_result_Tenosr(whals1.data*whals2.data, whals1, whals2)
+    whals1, whals2 = self.get_Tensors(whals1, whals2)
+    return self.get_result_Tensor(whals1.data*whals2.data, whals1, whals2)
   
   def backward(self, whals1, whals2):
     
@@ -120,8 +120,8 @@ class Div(Action):
   
   def forward(self, whals1, whals2):
     
-    whals1, whals2 = self.get_Tenosrs(whals1, whals2)
-    return self.get_result_Tenosr(whals1.data/whals2.data, whals1, whals2)
+    whals1, whals2 = self.get_Tensors(whals1, whals2)
+    return self.get_result_Tensor(whals1.data/whals2.data, whals1, whals2)
   
   def backward(self, whals1, whals2):
     
@@ -138,8 +138,8 @@ class Dot(Action):
   
   def forward(self, whals1, whals2):
     
-    whals1, whals2 = self.get_Tenosrs(whals1, whals2)
-    return self.get_result_Tenosr(np.dot(whals1.data, whals2.data), whals1, whals2)
+    whals1, whals2 = self.get_Tensors(whals1, whals2)
+    return self.get_result_Tensor(np.dot(whals1.data, whals2.data), whals1, whals2)
   
   def backward(self, whals1, whals2):
     
@@ -157,8 +157,8 @@ class Exp(Action):
   
   def forward(self, whals):
     
-    whals = self.get_Tenosrs(whals)
-    return self.get_result_Tenosr(np.exp(whals.data), whals)
+    whals = self.get_Tensors(whals)
+    return self.get_result_Tensor(np.exp(whals.data), whals)
   
   def backward(self, whals):
     
@@ -174,8 +174,8 @@ class Log(Action):
   
   def forward(self, whals):
     
-    whals = self.get_Tenosrs(whals)
-    return self.get_result_Tenosr(np.log(whals.data), whals)
+    whals = self.get_Tensors(whals)
+    return self.get_result_Tensor(np.log(whals.data), whals)
   
   def backward(self, whals):
     
@@ -191,8 +191,8 @@ class Pow(Action):
   
   def forward(self, whals1, whals2):
     
-    whals1, whals2 = self.get_Tenosrs(whals1, whals2)
-    return self.get_result_Tenosr(np.power(whals1.data, whals2.data), whals1, whals2)
+    whals1, whals2 = self.get_Tensors(whals1, whals2)
+    return self.get_result_Tensor(np.power(whals1.data, whals2.data), whals1, whals2)
   
   def backward(self, whals1, whals2):
     
@@ -214,8 +214,8 @@ class Sum(Action):
   
   def forward(self, whals):
     
-    whals = self.get_Tenosrs(whals)
-    return self.get_result_Tenosr(np.sum(whals.data, axis=self.axis), whals)
+    whals = self.get_Tensors(whals)
+    return self.get_result_Tensor(np.sum(whals.data, axis=self.axis), whals)
   
   def backward(self, whals):
     
@@ -236,8 +236,8 @@ class Transpose(Action):
   
   def forward(self, whals):
     
-    whals = self.get_Tenosrs(whals)
-    return self.get_result_Tenosr(whals.data.T, whals)
+    whals = self.get_Tensors(whals)
+    return self.get_result_Tensor(whals.data.T, whals)
 
   def backward(self, whals):
     
@@ -253,9 +253,9 @@ class Flatten(Action):
   
   def forward(self, whals):
     
-    whals = self.get_Tenosrs(whals)
+    whals = self.get_Tensors(whals)
     flattened = whals.data.flatten()
-    return self.get_result_Tenosr(flattened.reshape(flattened.shape[0],1), whals)
+    return self.get_result_Tensor(flattened.reshape(flattened.shape[0],1), whals)
   
   def backward(self, whals):
     
@@ -271,8 +271,8 @@ class Reshape(Action):
   
   def forward(self, whals, new_shape):
     
-    whals = self.get_Tenosrs(whals)
-    return self.get_result_Tenosr(whals.data.reshape(new_shape), whals)
+    whals = self.get_Tensors(whals)
+    return self.get_result_Tensor(whals.data.reshape(new_shape), whals)
   
   def backward(self, whals):
    

@@ -15,7 +15,7 @@ class Graph:
     self.add_node(result_node)
     for operand in inputs:
       if self.get_node(operand) is None:
-        self.add_Tenosr(operand)
+        self.add_Tensor(operand)
       operand_node = self.get_node(operand)
       result_node.append_parent(operand_node)
       operand_node.append_child(result_node)
@@ -28,11 +28,11 @@ class Graph:
     
     return self.nodes_dict.get(whals)
   
-  def add_Tenosr(self, whals):
+  def add_Tensor(self, whals):
     
     self.nodes_dict[whals] = Node(whals)
   
-  def remove_Tenosr(self, whals):
+  def remove_Tensor(self, whals):
     
     self.nodes_dict.pop(whals)
   
@@ -47,8 +47,8 @@ class Graph:
   
   def zero_grad(self):
     
-    for Tenosr in self.nodes_dict.keys():
-      Tenosr.zero_grad()
+    for Tensor in self.nodes_dict.keys():
+      Tensor.zero_grad()
   
   def __repr__(self):
     return 'Graph()'

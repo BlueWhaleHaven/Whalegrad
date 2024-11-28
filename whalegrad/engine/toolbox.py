@@ -133,8 +133,8 @@ def validate_function_gradient(fn, inputs, params, targets=None, loss_fn=None, e
   def get_loss(targets=targets):
     outputs = fn(*inputs, **kwargs)
     if targets is None:
-      from .Tenosr import Tenosr as Tenosr
-      targets = Tenosr(np.ones(outputs.shape))
+      from .Tensor import Tensor as Tensor
+      targets = Tensor(np.ones(outputs.shape))
     loss = loss_fn(outputs, targets)
     return loss
   
