@@ -1,0 +1,31 @@
+# Ignore build artifacts
+build/
+*.o
+*.so
+*.a
+
+# Ignore temporary files and editor backups
+*.swp
+*.swo
+*.tmp
+*.log
+*~
+.#*
+
+# Ignore compiled example binaries
+Whalegrad/examples/*.out
+Whalegrad/examples/*.exe
+
+# Ignore datasets
+Whalegrad/datasets/*
+
+# Ignore test binaries
+Whalegrad/tests/*.out
+Whalegrad/tests/*.exe
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db
+
+# Env
+.env
