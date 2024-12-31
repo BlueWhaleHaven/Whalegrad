@@ -29,3 +29,5 @@ Thumbs.db
 
 # Env
 .env
+
+.vscode
