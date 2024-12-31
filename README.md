@@ -6,12 +6,8 @@ This is inspired by andrej karapthy's micrograd.
 > [!IMPORTANT] 
 > This project is still under development.
 
-Autograd engine is a framework for performing automatic differentiation. 
-The autograd package in PyTorch provides a way to perform automatic differentiation of tensors. 
-This is useful for training neural networks. 
-The autograd package provides automatic differentiation for all operations on Tensors. 
-It is a define-by-run framework, which means that your backprop is defined by how your code is run, 
-and that every single iteration can be different.
+Autograd is a engine that automatically computes gradients (derivatives) of operations performed on tensors. 
+These gradients are essential for training neural networks through backpropagation.
 
 ## Example 
 
