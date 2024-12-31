@@ -3,7 +3,8 @@
 Whalegrad is a lightweight deep learning library written in C, designed for educational purposes.
 This is inspired by andrej karapthy's macrograd.
 
-> [!IMPORTANT] This project is still under development.
+> [!IMPORTANT] 
+> This project is still under development.
 
 Autograd engine is a framework for performing automatic differentiation. 
 The autograd package in PyTorch provides a way to perform automatic differentiation of tensors. 
