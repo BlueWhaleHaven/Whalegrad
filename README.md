@@ -17,6 +17,8 @@ and that every single iteration can be different.
 
 ```c
 
+#include "../engine/tensor.h"
+
 int main() {
     
     Tensor* a = tensor_create(-4.0);
