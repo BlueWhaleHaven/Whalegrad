@@ -4,7 +4,7 @@
 
 
 void xor_example() {
-    printf("Creating XOR neural network...\n");
+    
     
     //  2 -> 4 -> 1
     int layer_sizes[] = {2, 4, 1};
@@ -14,7 +14,7 @@ void xor_example() {
     double inputs[4][2] = {{0,0}, {0,1}, {1,0}, {1,1}};
     double targets[4] = {0, 1, 1, 0};
     
-    double learning_rate = 0.1;  // Add learning rate
+    double learning_rate = 0.1;  
     
     // Training loop
     for (int epoch = 0; epoch < 100; epoch++) {
@@ -27,8 +27,8 @@ void xor_example() {
             Tensor* x2 = tensor_create(inputs[i][1]);
             Tensor* target = tensor_create(targets[i]);
             
-            // Input processing (simplified due to scalar operations)
-            Tensor* input = tensor_add(x1, x2);  // This is just for demonstration
+            
+            Tensor* input = tensor_add(x1, x2);  
             
             
             Tensor* output = mlp_forward(mlp, input);
@@ -40,7 +40,7 @@ void xor_example() {
             // Backward pass
             tensor_backward(loss);
             
-            // Update weights and biases using gradient descent
+            
             for (int layer = 0; layer < mlp->num_layers; layer++) {
                 // Update weights
                 mlp->weights[layer]->data -= learning_rate * mlp->weights[layer]->grad;
@@ -69,7 +69,7 @@ void xor_example() {
         }
         
         if (epoch % 10 == 0) {
-            printf("Epoch %d complete, average loss: %.4f\n\n", epoch, total_loss / 4.0);
+            printf("epoch %d complete, average loss: %.4f\n\n", epoch, total_loss / 4.0);
         }
     }
     
