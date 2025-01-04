@@ -73,7 +73,26 @@ void xor_example() {
         }
     }
     
-    // Clean up
+    
+    printf("\nEvaluation:\n");
+    for (int i = 0; i < 4; i++) {
+        Tensor* x1 = tensor_create(inputs[i][0]);
+        Tensor* x2 = tensor_create(inputs[i][1]);
+        Tensor* input = tensor_add(x1, x2);
+        
+        Tensor* output = mlp_forward(mlp, input);
+        
+        printf("Input: [%.0f, %.0f] -> Output: %.4f (Expected: %.0f)\n",
+               inputs[i][0], inputs[i][1], output->data, targets[i]);
+        
+        // clean up
+        tensor_free(x1);
+        tensor_free(x2);
+        tensor_free(input);
+        tensor_free(output);
+    }
+    
+    // clean up
     mlp_free(mlp);
 }
 
