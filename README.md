@@ -91,3 +91,17 @@ int main() {
 gcc grad.c ../engine/tensor.c -I../engine -o grad\n
 ./grad
 ```
+## TODO
+- [ ] Add Mnist Training
+- [ ] Add more activation functions
+- [ ] Add more layers
+- [ ] Add more optimizers
+- [ ] Add more loss functions
+- [ ] Add more metrics
+- [ ] Add more tests
+- [ ] Add more documentation
+- [ ] Add more examples
+- [ ] Add more features
+- [ ] Add more benchmarks
+- [ ] Add GPU support
+
