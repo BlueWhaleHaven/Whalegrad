@@ -10,7 +10,7 @@ void xor_example() {
     int layer_sizes[] = {2, 4, 1};
     MLP* mlp = mlp_create(layer_sizes, 3);
     
-    
+   // TODO : try with mnist data  
     double inputs[4][2] = {{0,0}, {0,1}, {1,0}, {1,1}};
     double targets[4] = {0, 1, 1, 0};
     
